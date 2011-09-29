@@ -8,5 +8,11 @@
 	<input type="file" name="file" />
 	<input type="submit" value="Upload It!" />
 </form>
+
+<ul>
+	{% for replay in latest %}
+		<li><a href="{{ replay.link }}">{{ replay.name }}</a></li>
+	{% endfor %}
+</ul>
 </body>
 </html>

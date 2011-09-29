@@ -8,7 +8,14 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-	return render_template('home.html')
+	latest = []
+	for replay in model.Replay.query.all():
+		latest.append({
+			'name': replay.filename,
+			'link': url_for('replay', key=replay.key),
+		})
+	
+	return render_template('home.html', latest=latest)
 
 @app.route('/replay/<key>')
 def replay(key):
