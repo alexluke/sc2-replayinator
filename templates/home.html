@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<head>
-	<title>SC2 Replay Uploader</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
 <h1>SC2 Replay Uploader</h1>
 <form method="POST" action="/submit" enctype="multipart/form-data">
 	<input type="file" name="file" />
@@ -14,5 +13,4 @@
 		<li><a href="{{ replay.link }}">{{ replay.name }}</a></li>
 	{% endfor %}
 </ul>
-</body>
-</html>
+{% endblock %}

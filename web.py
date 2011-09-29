@@ -35,6 +35,10 @@ def submit():
 	model.db.session.commit()
 	return redirect(url_for('replay', key=replay.key))
 
+@app.errorhandler(404)
+def page_not_found(error):
+	return render_template('404.html'), 404
+
 if __name__ == '__main__':
 	port = int(os.environ.get('PORT', 5000))
 	app.debug = True
