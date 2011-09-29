@@ -1,10 +1,11 @@
 from flask import Flask
 from flaskext.sqlalchemy import SQLAlchemy
+import os
 import boto
 import settings
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///tmp/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
 
 class Replay(db.Model):
@@ -23,8 +24,8 @@ class Replay(db.Model):
 		return self.key + '.SC2Replay'
 	
 	def download_url(self):
-		s3 = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
-		bucket = s3.get_bucket(settings.S3_BUCKET)
+		s3 = boto.connect_s3()
+		bucket = s3.get_bucket(os.environ['S3_BUCKET'])
 		s3_file = bucket.get_key(self.get_filename())
 		if not s3_file:
 			return None
@@ -45,8 +46,8 @@ class Replay(db.Model):
 		return key
 	
 	def upload(self, file):
-		s3 = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
-		bucket = s3.get_bucket(settings.S3_BUCKET)
+		s3 = boto.connect_s3()
+		bucket = s3.get_bucket(os.environ['S3_BUCKET'])
 		s3_file = boto.s3.key.Key(bucket)
 		s3_file.key = self.get_filename()
 		s3_file.set_contents_from_file(file)
