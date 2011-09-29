@@ -63,10 +63,24 @@ td { vertical-align: top; }
 
 
 /* ==|== primary styles =====================================================
-   Author: 
+   Author: Alex Luke
    ========================================================================== */
-
-
+body {
+	margin: 20px;
+}
+.button {
+	display: block;
+	width: 150px;
+	padding: 10px;
+	background-color: #4D85B6;
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+	font-size: 14px;
+}
+.button:visited {
+	color: #fff;
+}
 
 
 

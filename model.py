@@ -22,6 +22,14 @@ class Replay(db.Model):
 	def get_filename(self):
 		return self.key + '.SC2Replay'
 	
+	def download_url(self):
+		s3 = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+		bucket = s3.get_bucket(settings.S3_BUCKET)
+		s3_file = bucket.get_key(self.get_filename())
+		if not s3_file:
+			return None
+		return s3_file.generate_url(60 * 5)
+	
 	def create_unique_key(self):
 		existing = self.query.filter_by(hash=self.hash).first()
 		if existing:

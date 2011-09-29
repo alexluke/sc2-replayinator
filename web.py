@@ -16,10 +16,15 @@ def home():
 	
 	return render_template('home.html', latest=latest)
 
-@app.route('/replay/<key>')
+@app.route('/replay/<key>/')
 def replay(key):
 	replay = model.Replay.query.filter_by(key=key).one()
-	return replay.original_filename
+	return render_template('replay.html', replay=replay)
+
+@app.route('/replay/<key>/download/')
+def replay_download(key):
+	replay = model.Replay.query.filter_by(key=key).one()
+	return redirect(replay.download_url())
 
 @app.route('/submit', methods=['POST'])
 def submit():
