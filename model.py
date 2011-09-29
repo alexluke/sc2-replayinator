@@ -2,7 +2,6 @@ from flask import Flask
 from flaskext.sqlalchemy import SQLAlchemy
 import os
 import boto
-import settings
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
